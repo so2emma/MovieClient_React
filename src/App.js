@@ -1,42 +1,32 @@
-
-import { useState, useEffect } from 'react';
-import './App.css';
-import api from './api/axiosConfig';
-import Layout from './components/Layout';
-import Home from './components/home/Home';
-import {Routes, Route} from 'react-router-dom'
-
+import { useState, useEffect } from "react";
+import "./App.css";
+import api from "./api/axiosConfig";
+import Layout from "./components/Layout";
+import Home from "./components/home/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
+  const [movies, setMovies] = useState([]);
 
-  const [movies, setMovies] = useState();
-  
-  const getMovies = async () => {
-
-    try {
-      
-      const response = await api.get("/api/v1/movies")
-      setMovies(response.data)
-
-    } catch (error) {
-      console.log(error);
-    }
-
-  }
-
-  useEffect(()=> {
+  useEffect(() => {
     getMovies();
-  },[])
+  }, []);
+
+  const getMovies = async () => {
+    const response = await api.get("/api/v1/movies");
+    setMovies(response.data);
+  };
 
   return (
-    <div className="App">
+    <BrowserRouter>
+      <div className="App">
         <Routes>
           <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />}> /</Route>
-
+            <Route index element={<Home movies={movies} />} />
           </Route>
         </Routes>
-    </div>
+      </div>
+    </BrowserRouter>
   );
 }
 
