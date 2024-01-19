@@ -3,6 +3,7 @@ import "./App.css";
 import api from "./api/axiosConfig";
 import Layout from "./components/Layout";
 import Home from "./components/home/Home";
+import Header from "./components/header/Header";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        <Header/>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home movies={movies} />} />
